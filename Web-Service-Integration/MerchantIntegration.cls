@@ -25,7 +25,7 @@ public HttpResponse createReq() {
     this.email = System.currentPageReference().getParameters().get('email'); //Record email is passed in url for controller's page
     
     req = new HttpRequest();
-    req.setEndpoint('https://secure.nmi.com/api/query.php?username=usernameHere&password=passwordHere&otherParams=params);
+    req.setEndpoint('https://secure.nmi.com/api/query.php?username=usernameHere&password=passwordHere&otherParams=params');
     req.setMethod('GET');
       
     http = new Http();
