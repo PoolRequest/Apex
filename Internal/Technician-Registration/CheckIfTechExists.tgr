@@ -1,0 +1,25 @@
+trigger CheckTechExists on Service_Tech__c (before insert) {
+    Set<String> techs = new Set<String>();
+    Set<String> techEmail = new Set<String>();
+    Set<String> techPhone = new Set<String>();
+  for (Service_Tech__c t : Trigger.New)
+  {
+  techs.add(t.name); 
+  techEmail.add(t.Contact_Email__c);
+  techPhone.add(t.Contact_Phone__c);
+  }
+
+  List<Service_Tech__c> listName = [select id from Service_Tech__c where name in : techs];
+  List<Service_Tech__c> listEmail = [select id from Service_Tech__c where Contact_Email__c in : techEmail];
+  List<Service_Tech__c> listPhone = [select id from Service_Tech__c where Contact_Phone__c in : techPhone];
+
+  if (listName.size() > 1)
+  {
+  Trigger.New[0].Name.addError('Account Name already exists');
+  }
+  else if (listPhone.size() > 1)
+  {
+    Trigger.New[0].addError('Account with this phone number already exists.  Click the browsers ' + 
+    'back button to check your information or call 855-613-4555 for help with your account.');
+  }
+}
