@@ -1,1 +1,1 @@
-This is an example of a web service callout which queries a merchant gateway using a SOAP api request and loads the values into an object for report running. It returns vital information such as amount of payments, amount of failed payments and other general information.
+This is an example of a web service callout which queries a merchant gateway using a SOAP api request and displays the information in a UI for quick referencing.
