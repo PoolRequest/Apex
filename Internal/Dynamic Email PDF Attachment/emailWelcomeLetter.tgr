@@ -1,0 +1,32 @@
+trigger emailWelcomeLetter on Lead (before update) {
+    
+    for (Lead lead : Trigger.new)
+    {
+        if (lead.Temp_Is_Sold_Bool__c == true)
+        {
+        List<Attachment> att = [select Id, Name, Body, ContentType from Attachment where parentId =:lead.Id];
+            if (att.size() == 1)
+                {   
+                // Setting my attachment
+                    Messaging.EmailFileAttachment efa = new Messaging.EmailFileAttachment();
+                    efa.setFileName(att[0].Name);
+                    efa.setBody(att[0].Body);
+                    efa.setContentType(att[0].ContentType);
+                    efa.setInline(true);
+                // Building the mail content                        
+                    Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+                    String[] toAddresses = new String[] {lead.Email};
+                    mail.setToAddresses(toAddresses);
+                    mail.setSubject('Welcome to AFC Home Club!');
+                    mail.setPlainTextBody('This is an automated system email sent from AFC Home Club. Attached is a welcome letter created by your Account Representative.  Please review and if assistance is needed, contact your Account Representive via the information on your welcome letter. Do not reply to this email.  Thank you.');
+                    mail.setFileAttachments(new Messaging.EmailFileAttachment[] {efa});
+                    
+                    Messaging.sendEmailResult[] sendResult = Messaging.sendEmail(new Messaging.singleEmailMessage[] {mail});
+                                       
+                    lead.Temp_Is_Sold_Bool__c = false;
+                    lead.Temp_Automated_Response__c = 'Letter sent.';
+                }
+            }
+        else
+            continue;
+        }  
