@@ -1,0 +1,8 @@
+trigger queryZillow on Lead (after insert)
+{
+    for (Lead lead : Trigger.new)
+    {
+        if (!Test.isRunningTest())
+        zillowCallout.createZillowReq(lead.id);
+    }
+}
