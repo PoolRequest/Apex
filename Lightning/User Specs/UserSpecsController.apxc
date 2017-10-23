@@ -1,0 +1,8 @@
+public with sharing class UserSpecsController {
+    
+    @AuraEnabled
+    public static User getCurrentUser()
+    {
+        return [select Id, FirstName, LastName, LastLoginDate from User where Id =: UserInfo.getUserId() limit 1];
+    }
+}
