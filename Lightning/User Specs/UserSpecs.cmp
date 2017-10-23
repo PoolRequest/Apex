@@ -1,0 +1,12 @@
+<aura:component controller="UserSpecsController" implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="message" default="Hey There" type="String"/>
+    <aura:attribute name="wordCount" default="0" type="String"/>
+    <aura:attribute name="keyHit" default="0" type="String"/>
+    <aura:attribute name="startTime" default="0" type="String"/>
+    <aura:attribute name="seconds" default="0" type="String"/>
+    <ui:outputText value="{!v.message}"/>
+    <br/>
+    <ui:outputtext value="Average Words Per Minute: "/>
+    <ui:outputText vazlue="{!v.wordCount}"/>
+</aura:component>
